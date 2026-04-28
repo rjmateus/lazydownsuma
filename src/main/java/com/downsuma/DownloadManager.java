@@ -75,10 +75,12 @@ public class DownloadManager {
             // The first thread to arrive becomes the downloader
             if (download.becomeDownloader()) {
                 try {
-                    // FIXME now that I have the download controllor 
-                    // I should check if the file got cached while I was waiting for the lock, 
-                    // and if so skip the download and return the cached file
-                    performDownload(url, cachedFile, download);
+                    if (Files.exists(cachedFile)) {
+                        log.info("File was cached while waiting for lock, skipping download: {}", url);
+                        download.complete();
+                    } else {
+                        performDownload(url, cachedFile, download);
+                    }
                 } catch (Exception e) {
                     download.fail(e);
                     throw e;
@@ -221,8 +223,9 @@ public class DownloadManager {
         }
 
         void awaitCompletion() throws InterruptedException {
-            //FIXME should I add a timeout here to prevent waiting indefinitely if something goes wrong with the downloader?
-            latch.await();
+            if (!latch.await(Config.DOWNLOAD_TIMEOUT_MINUTES, TimeUnit.SECONDS)) {
+                throw new RuntimeException("Timed out waiting for download to complete");
+            }
         }
 
         Throwable getError() {

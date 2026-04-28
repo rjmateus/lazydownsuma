@@ -21,4 +21,7 @@ public final class Config {
 
     /** Read buffer size in bytes for streaming. */
     public static final int BUFFER_SIZE = 8192;
+
+    /** Timeout in minutes for waiting on a download to complete. */
+    public static final int DOWNLOAD_TIMEOUT_MINUTES = 60;
 }
