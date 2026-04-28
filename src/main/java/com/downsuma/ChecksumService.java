@@ -12,8 +12,8 @@ import java.util.Properties;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Resolves and verifies SHA-256 checksums for upstream URLs.
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ChecksumService {
 
-    private static final Logger log = LoggerFactory.getLogger(ChecksumService.class);
+    private static final Logger log = LogManager.getLogger(ChecksumService.class);
     private final Properties localChecksums = new Properties();
     private final OkHttpClient httpClient;
 

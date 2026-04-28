@@ -5,12 +5,12 @@ import static spark.Spark.*;
 import java.io.OutputStream;
 
 import okhttp3.OkHttpClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class App {
 
-    private static final Logger log = LoggerFactory.getLogger(App.class);
+    private static final Logger log = LogManager.getLogger(App.class);
 
     public static void main(String[] args) {
         OkHttpClient httpClient = new OkHttpClient();
